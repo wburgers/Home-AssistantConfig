@@ -1,0 +1,18 @@
+zwave_useless_group:
+  entities:
+    - sensor.aeotec_zw100_multisensor_6_alarm_level
+    - sensor.aeotec_zw100_multisensor_6_alarm_type
+    - sensor.aeotec_zw100_multisensor_6_sourcenodeid
+    - sensor.slaapkamer_2_lamp_alarm_level
+    - sensor.slaapkamer_2_lamp_alarm_type
+    - sensor.slaapkamer_2_lamp_exporting
+    - sensor.slaapkamer_2_lamp_heat
+    - sensor.slaapkamer_2_lamp_power_management
+    - sensor.slaapkamer_2_lamp_sourcenodeid
+    - sensor.ventilatie_alarm_level
+    - sensor.ventilatie_alarm_type
+    - sensor.ventilatie_exporting
+    - sensor.ventilatie_heat
+    - sensor.ventilatie_power_management
+    - sensor.ventilatie_sourcenodeid
+    - switch.slaapkamer_2_lamp_switch_2

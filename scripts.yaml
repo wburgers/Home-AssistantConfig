@@ -1,0 +1,54 @@
+ventilatie_stand1:
+  sequence:
+    - service: switch.turn_off
+      data:
+        entity_id: switch.ventilatie_switch
+
+ventilatie_stand2:
+  sequence:
+    - service: switch.turn_off
+      data:
+        entity_id: switch.ventilatie_switch_2
+    - service: switch.turn_on
+      data:
+        entity_id: switch.ventilatie_switch
+
+ventilatie_stand3:
+  sequence:
+    - service: switch.turn_off
+      data:
+        entity_id: switch.ventilatie_switch
+    - service: switch.turn_on
+      data:
+        entity_id: switch.ventilatie_switch_2
+
+lampen_woonkamer_aan:
+  sequence:
+    - service: light.turn_on
+      data:
+        entity_id:
+          - light.staande_lamp_1_level
+          - light.staande_lamp_2_level
+        brightness_pct: 60
+
+lampen_woonkamer_uit:
+  sequence:
+    - service: light.turn_off
+      data:
+        entity_id:
+          - light.staande_lamp_1_level
+          - light.staande_lamp_2_level
+
+lampen_slaapkamer2_aan:
+  sequence:
+    - service: switch.turn_on
+      data:
+        entity_id:
+          - switch.slaapkamer_2_lamp_switch
+
+lampen_slaapkamer2_uit:
+  sequence:
+    - service: switch.turn_off
+      data:
+        entity_id:
+          - switch.slaapkamer_2_lamp_switch

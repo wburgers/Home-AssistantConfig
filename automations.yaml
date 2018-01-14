@@ -1,0 +1,84 @@
+- alias: "Alles uit bij vertrek"
+  trigger:
+    platform: zone
+    entity_id: device_tracker.owntracks_willem
+    zone: zone.home
+    event: leave
+  action:
+    - service: script.lampen_woonkamer_uit
+    - service: script.lampen_slaapkamer2_uit
+    - service: media_player.turn_off
+      data:
+        entity_id: media_player.living_room_tv
+
+- alias: "Licht aan voor zonsopkomst"
+  trigger:
+    platform: time
+    at: "06:35:00"
+  condition:
+    condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sun.sun
+      value_template: "{{ state.attributes.elevation }}"
+      below: 0.5
+    - condition: state
+      entity_id: device_tracker.owntracks_willem
+      state: home
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+  action:
+    service: script.lampen_woonkamer_aan
+
+- alias: "Licht aan bij zonsondergang"
+  trigger:
+    platform: numeric_state
+    entity_id: sun.sun
+    value_template: "{{ state.attributes.elevation }}"
+    below: 0.5
+  condition:
+    condition: state
+    entity_id: device_tracker.owntracks_willem
+    state: home
+  action:
+    service: script.lampen_woonkamer_aan
+
+- alias: "Licht aan bij thuiskomst"
+  trigger:
+    platform: zone
+    entity_id: device_tracker.owntracks_willem
+    zone: zone.home
+    event: enter
+  condition:
+    condition: numeric_state
+    entity_id: sun.sun
+    value_template: "{{ state.attributes.elevation }}"
+    below: -1.0
+  action:
+    service: script.lampen_woonkamer_aan
+
+- alias: "Ventilatie uit lage luchtvochtigheid"
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.aeotec_zw100_multisensor_6_relative_humidity
+    below: 66
+  action:
+    - service: script.ventilatie_stand1
+
+- alias: "Ventileren badkamer stand 2"
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.aeotec_zw100_multisensor_6_relative_humidity
+    above: 65
+    below: 80
+  action:
+    - service: script.ventilatie_stand2
+
+- alias: "Ventileren badkamer stand 3"
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.aeotec_zw100_multisensor_6_relative_humidity
+    above: 79
+  action:
+    - service: script.ventilatie_stand3
