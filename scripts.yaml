@@ -2,7 +2,9 @@ ventilatie_stand1:
   sequence:
     - service: switch.turn_off
       data:
-        entity_id: switch.ventilatie_switch
+        entity_id: 
+          - switch.ventilatie_switch
+          - switch.ventilatie_switch_2
 
 ventilatie_stand2:
   sequence:

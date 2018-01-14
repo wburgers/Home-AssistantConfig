@@ -1,3 +1,19 @@
+badkamer:
+  name: Badkamer
+  view: true
+  entities:
+    - group.climate_badkamer
+
+climate_badkamer:
+  name: Climate
+  entities:
+  - climate.badkamer
+  - sensor.aeotec_zw100_multisensor_6_temperature
+  - sensor.aeotec_zw100_multisensor_6_relative_humidity
+  - sensor.aeotec_zw100_multisensor_6_luminance
+  - sensor.ventilation_current_mode
+  - input_number.ventilation
+
 zwave_useless_group:
   entities:
     - sensor.aeotec_zw100_multisensor_6_alarm_level

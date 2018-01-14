@@ -58,27 +58,50 @@
   action:
     service: script.lampen_woonkamer_aan
 
-- alias: "Ventilatie uit lage luchtvochtigheid"
+- id: ventilation_slider_update
+  alias: "Ventilatie slider bijwerken"
   trigger:
-    platform: numeric_state
-    entity_id: sensor.aeotec_zw100_multisensor_6_relative_humidity
-    below: 66
+    platform: state
+    entity_id: sensor.ventilation_current_mode
+  action:
+     service: input_number.set_value
+     data_template:
+      entity_id: input_number.ventilation
+      value: "{{ states.sensor.ventilation_current_mode.state }}"
+
+- id: ventilation_low
+  alias: "Ventileren stand 1"
+  trigger:
+    - platform: state
+      entity_id: input_number.ventilation
+      to: "1.0"
+    - platform: numeric_state
+      entity_id: sensor.aeotec_zw100_multisensor_6_relative_humidity
+      below: 66
   action:
     - service: script.ventilatie_stand1
 
-- alias: "Ventileren badkamer stand 2"
+- id: ventilation_medium
+  alias: "Ventileren stand 2"
   trigger:
-    platform: numeric_state
-    entity_id: sensor.aeotec_zw100_multisensor_6_relative_humidity
-    above: 65
-    below: 80
+    - platform: state
+      entity_id: input_number.ventilation
+      to: "2.0"
+    - platform: numeric_state
+      entity_id: sensor.aeotec_zw100_multisensor_6_relative_humidity
+      above: 65
+      below: 80
   action:
     - service: script.ventilatie_stand2
 
-- alias: "Ventileren badkamer stand 3"
+- id: ventilation_high
+  alias: "Ventileren stand 3"
   trigger:
-    platform: numeric_state
-    entity_id: sensor.aeotec_zw100_multisensor_6_relative_humidity
-    above: 79
+    - platform: state
+      entity_id: input_number.ventilation
+      to: "3.0"
+    - platform: numeric_state
+      entity_id: sensor.aeotec_zw100_multisensor_6_relative_humidity
+      above: 79
   action:
     - service: script.ventilatie_stand3

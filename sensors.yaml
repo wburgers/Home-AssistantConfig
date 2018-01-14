@@ -1,0 +1,21 @@
+- platform: openweathermap
+  forecast: 1
+  api_key: !secret owm_api_key
+  monitored_conditions:
+    - weather
+    - humidity
+
+- platform: template
+  sensors:
+    ventilation_current_mode:
+      value_template: >
+        {% if (is_state('switch.ventilatie_switch_2', 'on')) %}
+          3
+        {% elif (is_state('switch.ventilatie_switch', 'on')) %}
+          2
+        {% else %} 
+          1
+        {% endif %}
+      entity_id:
+        - switch.ventilatie_switch_2
+        - switch.ventilatie_switch

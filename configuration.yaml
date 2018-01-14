@@ -10,6 +10,9 @@ homeassistant:
   unit_system: metric
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Amsterdam
+  customize_glob:
+    "automation.ventilation_*":
+      hidden: true
 
 # Show links to resources in log and frontend
 #introduction:
@@ -52,19 +55,11 @@ sun:
 # Weather Prediction
 weather:
   - platform: openweathermap
-    api_key: !secret own_api_key
+    api_key: !secret owm_api_key
 
 binary_sensor:
   - platform: workday
     country: NL
-
-sensor:
-  - platform: openweathermap
-    forecast: 1
-    api_key: !secret owm_api_key
-    monitored_conditions:
-      - weather
-      - humidity
 
 # Text to speech
 tts:
@@ -80,6 +75,8 @@ media_player:
     name: Living Room TV
     filename: webostv.conf
 
+sensor: !include sensors.yaml
+input_number: !include input_numbers.yaml
 script: !include scripts.yaml
 automation: !include automations.yaml
 group: !include groups.yaml
