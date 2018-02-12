@@ -24,6 +24,15 @@ ventilatie_stand3:
       data:
         entity_id: switch.ventilatie_switch_2
 
+movie_mode:
+  sequence:
+    - service: light.turn_on
+      data:
+        entity_id:
+          - light.staande_lamp_1_level
+          - light.staande_lamp_2_level
+        brightness_pct: 25
+
 lampen_woonkamer_aan:
   sequence:
     - service: light.turn_on

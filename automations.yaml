@@ -18,29 +18,49 @@
   condition:
     condition: and
     conditions:
-    - condition: numeric_state
-      entity_id: sun.sun
-      value_template: "{{ state.attributes.elevation }}"
-      below: 0.5
-    - condition: state
-      entity_id: device_tracker.owntracks_willem
-      state: home
-    - condition: state
-      entity_id: binary_sensor.workday_sensor
-      state: 'on'
+      - condition: numeric_state
+        entity_id: sun.sun
+        value_template: "{{ state.attributes.elevation }}"
+        below: 0.5
+      - condition: state
+        entity_id: device_tracker.owntracks_willem
+        state: home
+      - condition: state
+        entity_id: binary_sensor.workday_sensor
+        state: 'on'
   action:
     service: script.lampen_woonkamer_aan
 
-- alias: "Licht aan bij zonsondergang"
+- alias: "Licht aan bij zonsondergang of tv uit"
   trigger:
-    platform: numeric_state
-    entity_id: sun.sun
-    value_template: "{{ state.attributes.elevation }}"
-    below: 0.5
+    - platform: numeric_state
+      entity_id: sun.sun
+      value_template: "{{ state.attributes.elevation }}"
+      below: -0.5
+    - platform: state
+      entity_id: media_player.living_room_tv
+      to: "off"
+    - platform: state
+      entity_id: media_player.living_room_tv
+      to: "paused"
   condition:
-    condition: state
-    entity_id: device_tracker.owntracks_willem
-    state: home
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: device_tracker.owntracks_willem
+        state: home
+      - condition: numeric_state
+        entity_id: sun.sun
+        value_template: "{{ state.attributes.elevation }}"
+        below: -0.5
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: media_player.living_room_tv
+            state: "off"
+          - condition: state
+            entity_id: media_player.living_room_tv
+            state: "paused"
   action:
     service: script.lampen_woonkamer_aan
 
@@ -54,9 +74,35 @@
     condition: numeric_state
     entity_id: sun.sun
     value_template: "{{ state.attributes.elevation }}"
-    below: -1.0
+    below: -0.5
   action:
     service: script.lampen_woonkamer_aan
+
+- id: movie_time
+  alias: "Movie Time"
+  trigger:
+    - platform: state
+      entity_id: media_player.living_room_tv
+      to: "playing"
+    - platform: numeric_state
+      entity_id: sun.sun
+      value_template: "{{ state.attributes.elevation }}"
+      below: -0.5
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: device_tracker.owntracks_willem
+        state: home
+      - condition: state
+        entity_id: media_player.living_room_tv
+        state: "playing"
+      - condition: numeric_state
+        entity_id: sun.sun
+        value_template: "{{ state.attributes.elevation }}"
+        below: -0.5
+  action:
+    - service: script.movie_mode
 
 - id: ventilation_slider_update
   alias: "Ventilatie slider bijwerken"
