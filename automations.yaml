@@ -122,7 +122,7 @@
       entity_id: input_number.ventilation
       to: "1.0"
     - platform: numeric_state
-      entity_id: sensor.aeotec_zw100_multisensor_6_relative_humidity
+      entity_id: sensor.badkamer_sensor_relative_humidity
       below: 66
   action:
     - service: script.ventilatie_stand1
@@ -134,7 +134,7 @@
       entity_id: input_number.ventilation
       to: "2.0"
     - platform: numeric_state
-      entity_id: sensor.aeotec_zw100_multisensor_6_relative_humidity
+      entity_id: sensor.badkamer_sensor_relative_humidity
       above: 65
       below: 80
   action:
@@ -147,7 +147,7 @@
       entity_id: input_number.ventilation
       to: "3.0"
     - platform: numeric_state
-      entity_id: sensor.aeotec_zw100_multisensor_6_relative_humidity
+      entity_id: sensor.badkamer_sensor_relative_humidity
       above: 79
   action:
     - service: script.ventilatie_stand3

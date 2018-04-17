@@ -5,30 +5,35 @@ badkamer:
     - group.climate_badkamer
 
 climate_badkamer:
-  name: Climate
+  name: Badkamer Climate
   entities:
   - climate.badkamer
-  - sensor.aeotec_zw100_multisensor_6_temperature
-  - sensor.aeotec_zw100_multisensor_6_relative_humidity
-  - sensor.aeotec_zw100_multisensor_6_luminance
+  - sensor.badkamer_sensor_temperature
+  - sensor.badkamer_sensor_relative_humidity
+  - sensor.badkamer_sensor_luminance
   - sensor.ventilation_current_mode
   - input_number.ventilation
 
-zwave_useless_group:
+slaapkamer:
+  name: Slaapkamer
+  view: true
+
+slaapkamer_2:
+  name: Slaapkamer 2
+  view: true
   entities:
-    - sensor.aeotec_zw100_multisensor_6_alarm_level
-    - sensor.aeotec_zw100_multisensor_6_alarm_type
-    - sensor.aeotec_zw100_multisensor_6_sourcenodeid
-    - sensor.slaapkamer_2_lamp_alarm_level
-    - sensor.slaapkamer_2_lamp_alarm_type
-    - sensor.slaapkamer_2_lamp_exporting
-    - sensor.slaapkamer_2_lamp_heat
-    - sensor.slaapkamer_2_lamp_power_management
-    - sensor.slaapkamer_2_lamp_sourcenodeid
-    - sensor.ventilatie_alarm_level
-    - sensor.ventilatie_alarm_type
-    - sensor.ventilatie_exporting
-    - sensor.ventilatie_heat
-    - sensor.ventilatie_power_management
-    - sensor.ventilatie_sourcenodeid
-    - switch.slaapkamer_2_lamp_switch_2
+    - group.lights_slaapkamer_2
+    - group.climate_slaapkamer_2
+
+lights_slaapkamer_2:
+  name: Slaapkamer 2 Lights
+  entities:
+    - switch.slaapkamer_2_lamp_switch
+
+climate_slaapkamer_2:
+  name: Slaapkamer 2 Climate
+  entities:
+    - climate.slaapkamer_2_radiator_heating_1
+    - sensor.slaapkamer_2_sensor_temperature
+    - sensor.slaapkamer_2_sensor_relative_humidity
+    - sensor.slaapkamer_2_sensor_luminance
