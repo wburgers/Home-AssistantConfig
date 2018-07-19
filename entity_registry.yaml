@@ -14,11 +14,11 @@ switch.buddha_waterpomp_switch:
   name:
   platform: zwave
   unique_id: 6-72057594143391744
-climate.slaapkamer_2_radiator_heating_1:
+climate.danfoss_z_thermostat_014g0013_heating_1_2:
   name:
   platform: zwave
   unique_id: 7-72057594160660498
-climate.danfoss_z_thermostat_014g0013_heating_1_2:
+climate.danfoss_z_thermostat_014g0013_heating_1_3:
   name:
   platform: zwave
   unique_id: 8-72057594177437714
@@ -30,6 +30,10 @@ switch.ventilatie_switch_2:
   name:
   platform: zwave
   unique_id: 9-144115188231651328
+switch.ventilatie_switch_3:
+  name:
+  platform: zwave
+  unique_id: 9-216172782269579264
 sensor.ventilatie_energy:
   name:
   platform: zwave
@@ -38,6 +42,10 @@ sensor.ventilatie_energy_2:
   name:
   platform: zwave
   unique_id: 9-144115188231864322
+sensor.ventilatie_energy_3:
+  name:
+  platform: zwave
+  unique_id: 9-216172782269792258
 sensor.ventilatie_power:
   name:
   platform: zwave
@@ -54,6 +62,14 @@ sensor.ventilatie_exporting_2:
   name:
   platform: zwave
   unique_id: 9-144115188231864832
+sensor.ventilatie_power_3:
+  name:
+  platform: zwave
+  unique_id: 9-216172782269792386
+sensor.ventilatie_exporting_3:
+  name:
+  platform: zwave
+  unique_id: 9-216172782269792768
 sensor.ventilatie_alarm_type:
   name:
   platform: zwave
@@ -86,18 +102,10 @@ sensor.badkamer_sensor_luminance:
   name:
   platform: zwave
   unique_id: 10-72057594210697266
-sensor.badkamer_sensor_power:
-  name:
-  platform: zwave
-  unique_id: 10-72057594210697282
 sensor.badkamer_sensor_relative_humidity:
   name:
   platform: zwave
   unique_id: 10-72057594210697298
-sensor.badkamer_sensor_dew_point:
-  name:
-  platform: zwave
-  unique_id: 10-72057594210697394
 sensor.badkamer_sensor_ultraviolet:
   name:
   platform: zwave
@@ -194,3 +202,87 @@ sensor.slaapkamer_2_sensor_burglar:
   name:
   platform: zwave
   unique_id: 12-72057594245300385
+binary_sensor.slaapkamer_sensor_sensor:
+  name:
+  platform: zwave
+  unique_id: 13-72057594261012480
+sensor.slaapkamer_sensor_temperature:
+  name:
+  platform: zwave
+  unique_id: 13-72057594261028882
+sensor.slaapkamer_sensor_luminance:
+  name:
+  platform: zwave
+  unique_id: 13-72057594261028914
+sensor.slaapkamer_sensor_relative_humidity:
+  name:
+  platform: zwave
+  unique_id: 13-72057594261028946
+sensor.slaapkamer_sensor_ultraviolet:
+  name:
+  platform: zwave
+  unique_id: 13-72057594261029298
+sensor.slaapkamer_sensor_alarm_type:
+  name:
+  platform: zwave
+  unique_id: 13-72057594262077441
+sensor.slaapkamer_sensor_alarm_level:
+  name:
+  platform: zwave
+  unique_id: 13-72057594262077457
+sensor.slaapkamer_sensor_sourcenodeid:
+  name:
+  platform: zwave
+  unique_id: 13-72057594262077473
+sensor.slaapkamer_sensor_burglar:
+  name:
+  platform: zwave
+  unique_id: 13-72057594262077601
+zwave.controller:
+  name:
+  platform: zwave
+  unique_id: node-1
+zwave.staande_lamp_1:
+  name:
+  platform: zwave
+  unique_id: node-2
+zwave.staande_lamp_2:
+  name:
+  platform: zwave
+  unique_id: node-3
+zwave.danfoss_z_thermostat_014g0013:
+  name:
+  platform: zwave
+  unique_id: node-5
+zwave.buddha_waterpomp:
+  name:
+  platform: zwave
+  unique_id: node-6
+zwave.danfoss_z_thermostat_014g0013_2:
+  name:
+  platform: zwave
+  unique_id: node-7
+zwave.danfoss_z_thermostat_014g0013_3:
+  name:
+  platform: zwave
+  unique_id: node-8
+zwave.ventilatie:
+  name:
+  platform: zwave
+  unique_id: node-9
+zwave.badkamer_sensor:
+  name:
+  platform: zwave
+  unique_id: node-10
+zwave.slaapkamer_2_lamp:
+  name:
+  platform: zwave
+  unique_id: node-11
+zwave.slaapkamer_2_sensor:
+  name:
+  platform: zwave
+  unique_id: node-12
+zwave.slaapkamer_sensor:
+  name:
+  platform: zwave
+  unique_id: node-13

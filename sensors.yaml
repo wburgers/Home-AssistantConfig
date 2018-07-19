@@ -3,6 +3,7 @@
   api_key: !secret owm_api_key
   monitored_conditions:
     - weather
+    - temperature
     - humidity
 
 - platform: template

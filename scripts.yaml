@@ -1,4 +1,5 @@
 ventilatie_stand1:
+  alias: Ventilatie stand 1
   sequence:
     - service: switch.turn_off
       data:
@@ -7,6 +8,7 @@ ventilatie_stand1:
           - switch.ventilatie_switch_2
 
 ventilatie_stand2:
+  alias: Ventilatie stand 2
   sequence:
     - service: switch.turn_off
       data:
@@ -16,6 +18,7 @@ ventilatie_stand2:
         entity_id: switch.ventilatie_switch
 
 ventilatie_stand3:
+  alias: Ventilatie stand 3
   sequence:
     - service: switch.turn_off
       data:
@@ -25,6 +28,7 @@ ventilatie_stand3:
         entity_id: switch.ventilatie_switch_2
 
 movie_mode:
+  alias: Movie mode
   sequence:
     - service: light.turn_on
       data:
@@ -34,6 +38,7 @@ movie_mode:
         brightness_pct: 25
 
 lampen_woonkamer_aan:
+  alias: Lampen woonkamer aan
   sequence:
     - service: light.turn_on
       data:
@@ -43,6 +48,7 @@ lampen_woonkamer_aan:
         brightness_pct: 60
 
 lampen_woonkamer_uit:
+  alias: Lampen woonkamer uit
   sequence:
     - service: light.turn_off
       data:
@@ -51,6 +57,7 @@ lampen_woonkamer_uit:
           - light.staande_lamp_2_level
 
 lampen_slaapkamer2_aan:
+  alias: Lampen slaapkamer 2 aan
   sequence:
     - service: switch.turn_on
       data:
@@ -58,6 +65,7 @@ lampen_slaapkamer2_aan:
           - switch.slaapkamer_2_lamp_switch
 
 lampen_slaapkamer2_uit:
+  alias: Lampen slaapkamer 2 uit
   sequence:
     - service: switch.turn_off
       data:

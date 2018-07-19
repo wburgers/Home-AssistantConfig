@@ -1,3 +1,23 @@
+woonkamer:
+  name: Woonkamer
+  view: true
+  entities:
+    - group.lights_woonkamer
+    - group.scripts_woonkamer
+
+lights_woonkamer:
+  name: Woonkamer Lights
+  entities:
+    - light.staande_lamp_1_level
+    - light.staande_lamp_2_level
+
+scripts_woonkamer:
+  name: Woonkamer Scripts
+  entities:
+    - script.lampen_woonkamer_aan
+    - script.lampen_woonkamer_uit
+    - script.movie_mode
+
 badkamer:
   name: Badkamer
   view: true
@@ -7,16 +27,25 @@ badkamer:
 climate_badkamer:
   name: Badkamer Climate
   entities:
-  - climate.badkamer
-  - sensor.badkamer_sensor_temperature
-  - sensor.badkamer_sensor_relative_humidity
-  - sensor.badkamer_sensor_luminance
-  - sensor.ventilation_current_mode
-  - input_number.ventilation
+    - climate.badkamer
+    - sensor.badkamer_sensor_temperature
+    - sensor.badkamer_sensor_relative_humidity
+    - sensor.badkamer_sensor_luminance
+    - sensor.ventilation_current_mode
+    - input_number.ventilation
 
 slaapkamer:
   name: Slaapkamer
   view: true
+  entities:
+    - group.climate_slaapkamer
+
+climate_slaapkamer:
+  name: Slaapkamer Climate
+  entities:
+    - sensor.slaapkamer_sensor_temperature
+    - sensor.slaapkamer_sensor_relative_humidity
+    - sensor.slaapkamer_sensor_luminance
 
 slaapkamer_2:
   name: Slaapkamer 2
