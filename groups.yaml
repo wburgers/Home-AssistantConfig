@@ -23,6 +23,7 @@ badkamer:
   view: true
   entities:
     - group.climate_badkamer
+    - group.scripts_badkamer
 
 climate_badkamer:
   name: Badkamer Climate
@@ -33,6 +34,13 @@ climate_badkamer:
     - sensor.badkamer_sensor_luminance
     - sensor.ventilation_current_mode
     - input_number.ventilation
+
+scripts_badkamer:
+  name: Badkamer Scripts
+  entities:
+    - script.ventilatie_stand1
+    - script.ventilatie_stand2
+    - script.ventilatie_stand3
 
 slaapkamer:
   name: Slaapkamer
@@ -66,3 +74,19 @@ climate_slaapkamer_2:
     - sensor.slaapkamer_2_sensor_temperature
     - sensor.slaapkamer_2_sensor_relative_humidity
     - sensor.slaapkamer_2_sensor_luminance
+
+climate_temperatures_overview:
+  name: Temperatures
+  entities:
+    - sensor.owm_temperature
+    - sensor.badkamer_sensor_temperature
+    - sensor.slaapkamer_sensor_temperature
+    - sensor.slaapkamer_2_sensor_temperature
+
+climate_humidity_overview:
+  name: Humidities
+  entities:
+    - sensor.owm_humidity
+    - sensor.badkamer_sensor_relative_humidity
+    - sensor.slaapkamer_sensor_relative_humidity
+    - sensor.slaapkamer_2_sensor_relative_humidity

@@ -11,7 +11,15 @@ homeassistant:
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Amsterdam
   customize_glob:
-    "automation.ventilation_*":
+    "sensor.*_alarm_level":
+      hidden: true
+    "sensor.*_alarm_type":
+      hidden: true
+    "sensor.*_sourcenodeid":
+      hidden: true
+    "sensor.*_sensor_burglar":
+      hidden: true
+    "sensor.*_sensor_ultraviolet":
       hidden: true
 
 # Show links to resources in log and frontend
@@ -25,7 +33,7 @@ config:
 
 http:
   # Uncomment this to add a password (recommended!)
-  # api_password: PASSWORD
+  api_password: !secret api_password
   # Uncomment this if you are using SSL or running in Docker etc
   # base_url: example.duckdns.org:8123
 
