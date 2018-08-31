@@ -3,6 +3,7 @@ woonkamer:
   view: true
   entities:
     - group.lights_woonkamer
+    - group.climate_woonkamer
     - group.scripts_woonkamer
 
 lights_woonkamer:
@@ -10,6 +11,13 @@ lights_woonkamer:
   entities:
     - light.staande_lamp_1_level
     - light.staande_lamp_2_level
+
+climate_woonkamer:
+  name: Woonkamer Climate
+  entities:
+    - sensor.woonkamer_sensor_temperature
+    - sensor.woonkamer_sensor_relative_humidity
+    - sensor.woonkamer_sensor_luminance
 
 scripts_woonkamer:
   name: Woonkamer Scripts
@@ -79,6 +87,7 @@ climate_temperatures_overview:
   name: Temperatures
   entities:
     - sensor.owm_temperature
+    - sensor.woonkamer_sensor_temperature
     - sensor.badkamer_sensor_temperature
     - sensor.slaapkamer_sensor_temperature
     - sensor.slaapkamer_2_sensor_temperature
@@ -87,6 +96,7 @@ climate_humidity_overview:
   name: Humidities
   entities:
     - sensor.owm_humidity
+    - sensor.woonkamer_sensor_relative_humidity
     - sensor.badkamer_sensor_relative_humidity
     - sensor.slaapkamer_sensor_relative_humidity
     - sensor.slaapkamer_2_sensor_relative_humidity

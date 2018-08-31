@@ -10,6 +10,9 @@ homeassistant:
   unit_system: metric
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Amsterdam
+  customize:
+    switch.slaapkamer_2_lamp_switch_2:
+      hidden: true
   customize_glob:
     "sensor.*_alarm_level":
       hidden: true
@@ -40,9 +43,6 @@ http:
 # Checks for available updates
 updater:
   include_used_components: true
-
-# Discover some devices automatically
-#discovery:
 
 # Allows you to issue voice commands from the frontend in enabled browsers
 #conversation:
