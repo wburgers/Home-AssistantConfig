@@ -21,7 +21,7 @@
       - condition: numeric_state
         entity_id: sun.sun
         value_template: "{{ state.attributes.elevation }}"
-        below: 0.5
+        below: 0.0
       - condition: state
         entity_id: device_tracker.owntracks_willem
         state: home
