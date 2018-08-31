@@ -83,6 +83,7 @@ media_player:
     name: Living Room TV
     filename: webostv.conf
 
+switch: !include switches.yaml
 sensor: !include sensors.yaml
 input_number: !include input_numbers.yaml
 script: !include scripts.yaml
