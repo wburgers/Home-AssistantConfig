@@ -101,6 +101,12 @@ mqtt:
 device_tracker:
   - platform: owntracks
 
+notify:
+  - name: push
+    platform: html5
+    gcm_api_key: !secret gcm_server_key
+    gcm_sender_id: !secret gcm_sender_id
+
 google_assistant:
   project_id: !secret google_assistant_project_id
   client_id: !secret google_assistant_client_id
