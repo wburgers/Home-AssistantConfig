@@ -100,3 +100,51 @@ mqtt:
 
 device_tracker:
   - platform: owntracks
+
+google_assistant:
+  project_id: !secret google_assistant_project_id
+  client_id: !secret google_assistant_client_id
+  access_token: !secret google_assistant_access_token
+  api_key: !secret google_assistant_homegraph_api_key
+  expose_by_default: false
+  entity_config:
+    switch.buddha_waterpomp_switch:
+      name: Buddha Fountain
+      expose: true
+      aliases:
+        - Buddha waterpomp
+      room: Living room
+    light.staande_lamp_1_level:
+      name: Standing light one
+      expose: true
+      aliases:
+        - Staande lamp een
+      room: Living room
+    light.staande_lamp_2_level:
+      name: Standing light two
+      expose: true
+      aliases:
+        - Staande lamp twee
+      room: Living room
+    group.lights_woonkamer:
+      name: Living room lights
+      expose: true
+      aliases:
+        - woonkamer lampen
+      room: Living room
+    script.movie_mode:
+      name: Movie mode
+      expose: true
+      room: Living room
+    media_player.living_room_tv:
+      name: Living room tv
+      expose: true
+      aliases:
+        - woonkamer tv
+      room: Living room
+    switch.slaapkamer_2_lamp_switch:
+      name: Second bedroom light
+      expose: true
+      aliases:
+        - tweede slaapkamer lamp
+      room: Second bedroom
