@@ -31,18 +31,15 @@
   action:
     service: script.lampen_woonkamer_aan
 
-- alias: "Licht aan bij zonsondergang of tv uit"
+- alias: "Licht aan bij zonsondergang"
   trigger:
     - platform: numeric_state
       entity_id: sun.sun
       value_template: "{{ state.attributes.elevation }}"
       below: -0.5
     - platform: state
-      entity_id: media_player.living_room_tv
-      to: "off"
-    - platform: state
-      entity_id: media_player.living_room_tv
-      to: "paused"
+      entity_id: input_boolean.movie_mode
+      to: 'off'
   condition:
     condition: and
     conditions:
@@ -53,14 +50,9 @@
         entity_id: sun.sun
         value_template: "{{ state.attributes.elevation }}"
         below: -0.5
-      - condition: or
-        conditions:
-          - condition: state
-            entity_id: media_player.living_room_tv
-            state: "off"
-          - condition: state
-            entity_id: media_player.living_room_tv
-            state: "paused"
+      - condition: state
+        entity_id: input_boolean.movie_mode
+        state: 'off'
   action:
     service: script.lampen_woonkamer_aan
 
@@ -78,12 +70,11 @@
   action:
     service: script.lampen_woonkamer_aan
 
-- id: movie_time
-  alias: "Movie Time"
+- alias: "Licht dimmen"
   trigger:
     - platform: state
-      entity_id: media_player.living_room_tv
-      to: "playing"
+      entity_id: input_boolean.movie_mode
+      to: 'on'
     - platform: numeric_state
       entity_id: sun.sun
       value_template: "{{ state.attributes.elevation }}"
@@ -95,14 +86,37 @@
         entity_id: device_tracker.owntracks_willem
         state: home
       - condition: state
-        entity_id: media_player.living_room_tv
-        state: "playing"
+        entity_id: input_boolean.movie_mode
+        state: 'on'
       - condition: numeric_state
         entity_id: sun.sun
         value_template: "{{ state.attributes.elevation }}"
         below: -0.5
   action:
-    - service: script.movie_mode
+    service: script.lampen_woonkamer_dimmen
+
+- alias: "Movie mode aan"
+  trigger:
+    platform: state
+    entity_id: media_player.living_room_tv
+    to: "playing"
+  action:
+    service: input_boolean.turn_on
+    data:
+      entity_id: input_boolean.movie_mode
+
+- alias: "Movie mode uit"
+  trigger:
+    - platform: state
+      entity_id: media_player.living_room_tv
+      to: "off"
+    - platform: state
+      entity_id: media_player.living_room_tv
+      to: "paused"
+  action:
+    service: input_boolean.turn_off
+    data:
+      entity_id: input_boolean.movie_mode
 
 - id: ventilation_slider_update
   alias: "Ventilatie slider bijwerken"
@@ -110,8 +124,8 @@
     platform: state
     entity_id: sensor.ventilation_current_mode
   action:
-     service: input_number.set_value
-     data_template:
+    service: input_number.set_value
+    data_template:
       entity_id: input_number.ventilation
       value: "{{ states.sensor.ventilation_current_mode.state }}"
 

@@ -24,7 +24,7 @@ scripts_woonkamer:
   entities:
     - script.lampen_woonkamer_aan
     - script.lampen_woonkamer_uit
-    - script.movie_mode
+    - script.lampen_woonkamer_dimmen
 
 badkamer:
   name: Badkamer
@@ -69,6 +69,7 @@ slaapkamer_2:
   entities:
     - group.lights_slaapkamer_2
     - group.climate_slaapkamer_2
+    - group.scripts_slaapkamer_2
 
 lights_slaapkamer_2:
   name: Slaapkamer 2 Lights
@@ -82,6 +83,12 @@ climate_slaapkamer_2:
     - sensor.slaapkamer_2_sensor_temperature
     - sensor.slaapkamer_2_sensor_relative_humidity
     - sensor.slaapkamer_2_sensor_luminance
+
+scripts_slaapkamer_2:
+  name: Slaapkamer 2 Scripts
+  entities:
+    - script.lampen_slaapkamer2_aan
+    - script.lampen_slaapkamer2_uit
 
 climate_temperatures_overview:
   name: Temperatures

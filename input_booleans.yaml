@@ -1,0 +1,3 @@
+movie_mode:
+  name: "Movie mode"
+  initial: off

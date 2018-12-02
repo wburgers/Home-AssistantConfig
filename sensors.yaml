@@ -10,7 +10,7 @@
   sensors:
     ventilation_current_mode:
       value_template: >
-        {% if (is_state('switch.ventilatie_switch_2', 'on')) %}
+        {% if (is_state('switch.ventilatie_switch_3', 'on')) %}
           3
         {% elif (is_state('switch.ventilatie_switch', 'on')) %}
           2
@@ -18,5 +18,5 @@
           1
         {% endif %}
       entity_id:
-        - switch.ventilatie_switch_2
+        - switch.ventilatie_switch_3
         - switch.ventilatie_switch

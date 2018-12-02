@@ -14,6 +14,8 @@ homeassistant:
     switch.slaapkamer_2_lamp_switch_2:
       hidden: true
   customize_glob:
+    "sensor.*_exporting*":
+      hidden: true
     "sensor.*_alarm_level":
       hidden: true
     "sensor.*_alarm_type":
@@ -35,10 +37,11 @@ frontend:
 config:
 
 http:
-  # Uncomment this to add a password (recommended!)
-  api_password: !secret api_password
   # Uncomment this if you are using SSL or running in Docker etc
   # base_url: example.duckdns.org:8123
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.0.11
 
 # Checks for available updates
 updater:
@@ -86,6 +89,7 @@ media_player:
 switch: !include switches.yaml
 sensor: !include sensors.yaml
 input_number: !include input_numbers.yaml
+input_boolean: !include input_booleans.yaml
 script: !include scripts.yaml
 automation: !include automations.yaml
 group: !include groups.yaml
@@ -97,9 +101,9 @@ mqtt:
   keepalive: 60
   username: !secret mqtt_username
   password: !secret mqtt_password
+  certificate: /etc/ssl/certs/ca-certificates.crt
 
-device_tracker:
-  - platform: owntracks
+owntracks:
 
 notify:
   - name: push
@@ -109,8 +113,6 @@ notify:
 
 google_assistant:
   project_id: !secret google_assistant_project_id
-  client_id: !secret google_assistant_client_id
-  access_token: !secret google_assistant_access_token
   api_key: !secret google_assistant_homegraph_api_key
   expose_by_default: false
   entity_config:
@@ -119,6 +121,12 @@ google_assistant:
       expose: true
       aliases:
         - Buddha waterpomp
+      room: Living room
+    input_boolean.movie_mode:
+      name: Movie Mode
+      expose: true
+      aliases:
+        - Movie time
       room: Living room
     light.staande_lamp_1_level:
       name: Standing light one
@@ -138,10 +146,6 @@ google_assistant:
       aliases:
         - woonkamer lampen
       room: Living room
-    script.movie_mode:
-      name: Movie mode
-      expose: true
-      room: Living room
     media_player.living_room_tv:
       name: Living room tv
       expose: true
@@ -154,3 +158,9 @@ google_assistant:
       aliases:
         - tweede slaapkamer lamp
       room: Second bedroom
+    script.bedtijd:
+      name: Bedtime
+      expose: true
+      aliases:
+        - bedtijd
+      room: Living room

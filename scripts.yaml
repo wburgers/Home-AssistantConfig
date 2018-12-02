@@ -5,14 +5,14 @@ ventilatie_stand1:
       data:
         entity_id: 
           - switch.ventilatie_switch
-          - switch.ventilatie_switch_2
+          - switch.ventilatie_switch_3
 
 ventilatie_stand2:
   alias: Ventilatie stand 2
   sequence:
     - service: switch.turn_off
       data:
-        entity_id: switch.ventilatie_switch_2
+        entity_id: switch.ventilatie_switch_3
     - service: switch.turn_on
       data:
         entity_id: switch.ventilatie_switch
@@ -25,10 +25,10 @@ ventilatie_stand3:
         entity_id: switch.ventilatie_switch
     - service: switch.turn_on
       data:
-        entity_id: switch.ventilatie_switch_2
+        entity_id: switch.ventilatie_switch_3
 
-movie_mode:
-  alias: Movie mode
+lampen_woonkamer_dimmen:
+  alias: Lampen woonkamer dimmen
   sequence:
     - service: light.turn_on
       data:
@@ -71,3 +71,22 @@ lampen_slaapkamer2_uit:
       data:
         entity_id:
           - switch.slaapkamer_2_lamp_switch
+
+bedtijd:
+  alias: Bedtijd
+  sequence:
+    - service: media_player.turn_off
+      data:
+        entity_id: media_player.living_room_tv
+    - wait_template: "{{ is_state('input_boolean.movie_mode', 'off') }}"
+    - delay:
+        minutes: 1
+    - service: script.turn_on
+      entity_id:
+        - script.lampen_woonkamer_uit
+        - script.lampen_slaapkamer2_aan
+    - delay:
+        minutes: 8
+    - service: script.turn_on
+      entity_id:
+        - script.lampen_slaapkamer2_uit
