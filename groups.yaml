@@ -1,3 +1,29 @@
+meter_live_usage:
+  name: Live usage
+  entities:
+    - sensor.power_tariff
+    - sensor.power_consumption
+    - sensor.power_consumption_phase_l1
+    - sensor.power_production
+    - sensor.power_production_phase_l1
+    - sensor.hourly_gas_consumption
+
+meter_readings:
+  name: Meter readings
+  entities:
+    - sensor.power_consumption_low
+    - sensor.power_consumption_normal
+    - sensor.power_production_low
+    - sensor.power_production_normal
+    - sensor.gas_consumption
+
+power_failures:
+  name: Power failures
+  entities:
+    - sensor.long_power_failure_count
+    - sensor.voltage_sags_phase_l1
+    - sensor.voltage_swells_phase_l1
+
 woonkamer:
   name: Woonkamer
   view: true
@@ -5,6 +31,7 @@ woonkamer:
     - group.lights_woonkamer
     - group.climate_woonkamer
     - group.scripts_woonkamer
+    - group.switches_woonkamer
 
 lights_woonkamer:
   name: Woonkamer Lights
@@ -25,6 +52,11 @@ scripts_woonkamer:
     - script.lampen_woonkamer_aan
     - script.lampen_woonkamer_uit
     - script.lampen_woonkamer_dimmen
+
+switches_woonkamer:
+  name: Woonkamer Switches
+  entities:
+    - switch.buddha_waterpomp_switch
 
 badkamer:
   name: Badkamer
@@ -59,6 +91,7 @@ slaapkamer:
 climate_slaapkamer:
   name: Slaapkamer Climate
   entities:
+    - climate.slaapkamer_radiatorknop_heating_1
     - sensor.slaapkamer_sensor_temperature
     - sensor.slaapkamer_sensor_relative_humidity
     - sensor.slaapkamer_sensor_luminance
@@ -79,7 +112,7 @@ lights_slaapkamer_2:
 climate_slaapkamer_2:
   name: Slaapkamer 2 Climate
   entities:
-    - climate.slaapkamer_2_radiator_heating_1
+    - climate.slaapkamer_2_radiatorknop_heating_1
     - sensor.slaapkamer_2_sensor_temperature
     - sensor.slaapkamer_2_sensor_relative_humidity
     - sensor.slaapkamer_2_sensor_luminance

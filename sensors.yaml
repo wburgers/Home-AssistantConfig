@@ -20,3 +20,8 @@
       entity_id:
         - switch.ventilatie_switch_3
         - switch.ventilatie_switch
+
+- platform: dsmr
+  host: !secret dsmr_host
+  port: !secret dsmr_port
+  dsmr_version: 5

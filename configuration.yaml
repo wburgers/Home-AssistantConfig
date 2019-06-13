@@ -5,7 +5,7 @@ homeassistant:
   latitude: !secret latitude
   longitude: !secret longitude
   # Impacts weather/sunrise data (altitude above sea level in meters)
-  elevation: 10
+  elevation: 15
   # metric for Metric, imperial for Imperial
   unit_system: metric
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
@@ -13,22 +13,34 @@ homeassistant:
   customize:
     switch.slaapkamer_2_lamp_switch_2:
       hidden: true
+    sensor.ventilatie_previous_reading:
+      hidden: true
   customize_glob:
+    "sensor.*_dimmer_*_system*":
+      hidden: true
     "sensor.*_exporting*":
       hidden: true
-    "sensor.*_alarm_level":
+    "sensor.*_alarm_level*":
       hidden: true
-    "sensor.*_alarm_type":
+    "sensor.*_alarm_type*":
       hidden: true
-    "sensor.*_sourcenodeid":
+    "sensor.*_heat*":
+      hidden: true
+    "sensor.*_power_management*":
+      hidden: true
+    "sensor.*_sourcenodeid*":
       hidden: true
     "sensor.*_sensor_burglar":
       hidden: true
     "sensor.*_sensor_ultraviolet":
       hidden: true
+    "sensor.*phase_l2":
+      hidden: true
+    "sensor.*phase_l3":
+      hidden: true
 
-# Show links to resources in log and frontend
-#introduction:
+#logger:
+#  default: debug
 
 # Enables the frontend
 frontend:
@@ -43,6 +55,8 @@ http:
   trusted_proxies:
     - 192.168.0.11
 
+system_health:
+
 # Checks for available updates
 updater:
   include_used_components: true
@@ -51,14 +65,24 @@ updater:
 #conversation:
 
 recorder:
-  purge_interval: 7
+  purge_interval: 1
   purge_keep_days: 14
 
 # Enables support for tracking state changes over time.
 history:
+  exclude:
+    domains:
+      - automation
+      - group
+      - zwave
 
 # View all events in a logbook
 logbook:
+  exclude:
+    domains:
+      - automation
+      - group
+      - zwave
 
 # Track the sun
 sun:
@@ -74,17 +98,28 @@ binary_sensor:
 
 # Text to speech
 tts:
-  platform: google
+  platform: google_translate
 
 zwave:
   usb_path: /dev/ttyUSB0
 
+climate:
+  - platform: anna
+    name: Anna Thermostat
+    username: smile
+    password: !secret anna_password
+    host: !secret anna_host
+    scan_interval: 10
+
 media_player:
   - platform: webostv
     host: !secret tv_host
-    mac: !secret tv_mac
     name: Living Room TV
     filename: webostv.conf
+    turn_on_action:
+      service: wake_on_lan.send_magic_packet
+      data:
+        mac: !secret tv_mac
 
 switch: !include switches.yaml
 sensor: !include sensors.yaml
@@ -104,12 +139,18 @@ mqtt:
   certificate: /etc/ssl/certs/ca-certificates.crt
 
 owntracks:
+  max_gps_accuracy: 100
+  secret: !secret owntracks_password
 
 notify:
   - name: push
     platform: html5
-    gcm_api_key: !secret gcm_server_key
-    gcm_sender_id: !secret gcm_sender_id
+    vapid_pub_key: !secret vapid_pub_key
+    vapid_prv_key: !secret vapid_prv_key
+    vapid_email: !secret vapid_email
+  - platform: file
+    name: sleepfilenotify
+    filename: /config/sleep_times.txt
 
 google_assistant:
   project_id: !secret google_assistant_project_id
@@ -119,38 +160,22 @@ google_assistant:
     switch.buddha_waterpomp_switch:
       name: Buddha Fountain
       expose: true
-      aliases:
-        - Buddha waterpomp
       room: Living room
     input_boolean.movie_mode:
       name: Movie Mode
       expose: true
-      aliases:
-        - Movie time
       room: Living room
     light.staande_lamp_1_level:
       name: Standing light one
       expose: true
-      aliases:
-        - Staande lamp een
       room: Living room
     light.staande_lamp_2_level:
       name: Standing light two
       expose: true
-      aliases:
-        - Staande lamp twee
-      room: Living room
-    group.lights_woonkamer:
-      name: Living room lights
-      expose: true
-      aliases:
-        - woonkamer lampen
       room: Living room
     media_player.living_room_tv:
       name: Living room tv
       expose: true
-      aliases:
-        - woonkamer tv
       room: Living room
     switch.slaapkamer_2_lamp_switch:
       name: Second bedroom light
@@ -161,6 +186,4 @@ google_assistant:
     script.bedtijd:
       name: Bedtime
       expose: true
-      aliases:
-        - bedtijd
       room: Living room

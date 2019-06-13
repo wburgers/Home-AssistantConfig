@@ -1,2 +1,6 @@
 - platform: wake_on_lan
+  name: Zet PC aan
   mac_address: !secret pc_mac
+- platform: wake_on_lan
+  name: Zet TV aan
+  mac_address: !secret tv_mac

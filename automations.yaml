@@ -1,3 +1,47 @@
+- alias: "Update beschikbaar"
+  trigger:
+    platform: state
+    entity_id: updater.updater
+  action:
+    - service: notify.push
+      data:
+        message: "Er is een update voor Home Assistant beschikbaar!"
+        data:
+          tag: update-notification
+
+- alias: "Power failure"
+  trigger:
+    platform: state
+    entity_id: sensor.long_power_failure_count
+  action:
+    - service: notify.push
+      data:
+        message: "Er heeft zich een langdurige stroomstoring voorgedaan."
+        data:
+          tag: power-failure
+
+- alias: "Voltage sag"
+  trigger:
+    platform: state
+    entity_id: sensor.voltage_sags_phase_l1
+  action:
+    - service: notify.push
+      data:
+        message: "Er was zojuist een voltage sag."
+        data:
+          tag: voltage-sag
+
+- alias: "Voltage swell"
+  trigger:
+    platform: state
+    entity_id: sensor.voltage_swells_phase_l1
+  action:
+    - service: notify.push
+      data:
+        message: "Er was zojuist een voltage swell."
+        data:
+          tag: voltage-swell
+
 - alias: "Alles uit bij vertrek"
   trigger:
     platform: zone
@@ -10,6 +54,22 @@
     - service: media_player.turn_off
       data:
         entity_id: media_player.living_room_tv
+    - service: climate.set_hold_mode
+      data:
+        entity_id: climate.anna_thermostat
+        hold_mode: away
+
+- alias: "Thermostaat aan bij thuiskomst"
+  trigger:
+    platform: zone
+    entity_id: device_tracker.owntracks_willem
+    zone: zone.home
+    event: enter
+  action:
+    - service: climate.set_hold_mode
+      data:
+        entity_id: climate.anna_thermostat
+        hold_mode: home
 
 - alias: "Licht aan voor zonsopkomst"
   trigger:
@@ -31,6 +91,24 @@
   action:
     service: script.lampen_woonkamer_aan
 
+- alias: "Licht uit bij zonsopkomst"
+  trigger:
+    - platform: numeric_state
+      entity_id: sun.sun
+      value_template: "{{ state.attributes.elevation  }}"
+      above: 5.0
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: device_tracker.owntracks_willem
+        state: home
+      - condition: state
+        entity_id: binary_sensor.workday_sensor
+        state: 'on'
+  action:
+    service: script.lampen_woonkamer_uit
+  
 - alias: "Licht aan bij zonsondergang"
   trigger:
     - platform: numeric_state
@@ -137,7 +215,7 @@
       to: "1.0"
     - platform: numeric_state
       entity_id: sensor.badkamer_sensor_relative_humidity
-      below: 66
+      below: 56
   action:
     - service: script.ventilatie_stand1
 
@@ -149,8 +227,8 @@
       to: "2.0"
     - platform: numeric_state
       entity_id: sensor.badkamer_sensor_relative_humidity
-      above: 65
-      below: 80
+      above: 55
+      below: 76
   action:
     - service: script.ventilatie_stand2
 
@@ -162,6 +240,38 @@
       to: "3.0"
     - platform: numeric_state
       entity_id: sensor.badkamer_sensor_relative_humidity
-      above: 79
+      above: 75
   action:
     - service: script.ventilatie_stand3
+
+- id: trash_notification
+  alias: "Vuilniszak buiten zetten notificatie"
+  trigger:
+    - platform: time
+      at: '20:30:00'
+  condition:
+    condition: time
+    weekday:
+      - mon
+  action:
+    - service: notify.push
+      data:
+        message: "Vergeet niet de vuilniszak buiten te zetten!"
+        data:
+          tag: trash-notification
+
+- id: trash_tts
+  alias: "Vuilniszak buiten zetten tts reminder"
+  trigger:
+    - platform: time
+      at: '07:10:00'
+  condition:
+    condition: time
+    weekday:
+      - tue
+  action:
+    - service: tts.google_translate_say
+      entity_id: media_player.huiskamer
+      data:
+        message: 'Heb je de vuilniszak al buitengezet?'
+        language: 'nl'
