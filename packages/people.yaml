@@ -1,0 +1,79 @@
+automation:
+  - alias: "Willem verlaat huis"
+    trigger:
+      platform: zone
+      entity_id: device_tracker.owntracks_willem
+      zone: zone.home
+      event: leave
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.person_status_willem
+          option: "Away"
+
+  - alias: "Willem komt thuis"
+    trigger:
+      platform: zone
+      entity_id: device_tracker.owntracks_willem
+      zone: zone.home
+      event: enter
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.person_status_willem
+          option: "Home"
+
+sensor:
+  - platform: template
+    sensors:
+      someone_home:
+        friendly_name: "Er is iemand thuis"
+        value_template: '{% set someoneHome = namespace(state=false) %}
+
+{% for state in states.input_select if "input_select.person_status" in state.entity_id %}
+  {% if state.state != "Away" %}
+    {% set someoneHome.state = True %}
+  {% endif %}
+{% endfor %}
+
+{{ someoneHome.state }}'
+        entity_id:
+          - input_select.person_status_willem
+
+  - platform: template
+    sensors:
+      everyone_asleep:
+        friendly_name: "Iedereen Slaapt"
+        value_template: '{% set everyOneAsleep = namespace(state=true) %}
+
+{% if is_state("sensor.someone_home", "False") %}
+  {% set everyOneAsleep.state = False %}
+{% endif %}
+
+{% for state in states.input_select if "input_select.person_status" in state.entity_id %}
+  {% if state.state == "Home" %}
+    {% set everyOneAsleep.state = False %}
+  {% endif %}
+{% endfor %}
+
+{{ everyOneAsleep.state }}'
+        entity_id:
+          - input_select.person_status_willem
+          - sensor.someone_home
+
+input_select:
+  person_status_willem:
+    name: Status Willem
+    options:
+      - Home
+      - Away
+      - Asleep
+    icon: mdi:human-male
+
+
+
+
+
+
+
+

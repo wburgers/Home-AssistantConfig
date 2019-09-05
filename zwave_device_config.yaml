@@ -1,3 +1,12 @@
 light.fibaro_system_fgd212_dimmer_2_level:
   ignored: false
   polling_intensity: 0
+light.staande_lamp_2_level_2:
+  ignored: true
+  polling_intensity: 0
+sensor.staande_lamp_2_power_2:
+  ignored: true
+  polling_intensity: 0
+sensor.staande_lamp_1_power_2:
+  ignored: true
+  polling_intensity: 0

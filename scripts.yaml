@@ -5,14 +5,14 @@ ventilatie_stand1:
       data:
         entity_id: 
           - switch.ventilatie_switch
-          - switch.ventilatie_switch_3
+          - switch.ventilatie_switch_2
 
 ventilatie_stand2:
   alias: Ventilatie stand 2
   sequence:
     - service: switch.turn_off
       data:
-        entity_id: switch.ventilatie_switch_3
+        entity_id: switch.ventilatie_switch_2
     - service: switch.turn_on
       data:
         entity_id: switch.ventilatie_switch
@@ -25,7 +25,7 @@ ventilatie_stand3:
         entity_id: switch.ventilatie_switch
     - service: switch.turn_on
       data:
-        entity_id: switch.ventilatie_switch_3
+        entity_id: switch.ventilatie_switch_2
 
 lampen_woonkamer_dimmen:
   alias: Lampen woonkamer dimmen
@@ -78,10 +78,14 @@ bedtijd:
     - service: notify.sleepfilenotify
       data_template:
         message: '{{now().strftime("%Y-%m-%d %H:%M:%S")}}'
-    - service: climate.set_hold_mode
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.person_status_willem
+        option: "Asleep"
+    - service: climate.set_preset_mode
       data:
         entity_id: climate.anna_thermostat
-        hold_mode: asleep
+        preset_mode: asleep
     - service: media_player.turn_off
       data:
         entity_id: media_player.living_room_tv
@@ -97,3 +101,15 @@ bedtijd:
     - service: script.turn_on
       entity_id:
         - script.lampen_slaapkamer2_uit
+
+opstaan:
+  alias: Opstaan
+  sequence:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.person_status_willem
+        option: "Home"
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.anna_thermostat
+        preset_mode: home

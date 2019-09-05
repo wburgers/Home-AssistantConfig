@@ -1,7 +1,9 @@
 - alias: "Update beschikbaar"
   trigger:
     platform: state
-    entity_id: updater.updater
+    entity_id: binary_sensor.updater
+    from: 'off'
+    to: 'on'
   action:
     - service: notify.push
       data:
@@ -44,20 +46,19 @@
 
 - alias: "Alles uit bij vertrek"
   trigger:
-    platform: zone
-    entity_id: device_tracker.owntracks_willem
-    zone: zone.home
-    event: leave
+    platform: state
+    entity_id: sensor.someone_home
+    to: "False"
   action:
     - service: script.lampen_woonkamer_uit
     - service: script.lampen_slaapkamer2_uit
     - service: media_player.turn_off
       data:
         entity_id: media_player.living_room_tv
-    - service: climate.set_hold_mode
+    - service: climate.set_preset_mode
       data:
         entity_id: climate.anna_thermostat
-        hold_mode: away
+        preset_mode: away
 
 - alias: "Thermostaat aan bij thuiskomst"
   trigger:
@@ -66,10 +67,10 @@
     zone: zone.home
     event: enter
   action:
-    - service: climate.set_hold_mode
+    - service: climate.set_preset_mode
       data:
         entity_id: climate.anna_thermostat
-        hold_mode: home
+        preset_mode: home
 
 - alias: "Licht aan voor zonsopkomst"
   trigger:
@@ -96,7 +97,7 @@
     - platform: numeric_state
       entity_id: sun.sun
       value_template: "{{ state.attributes.elevation  }}"
-      above: 5.0
+      above: 3.0
   condition:
     condition: and
     conditions:
@@ -228,7 +229,7 @@
     - platform: numeric_state
       entity_id: sensor.badkamer_sensor_relative_humidity
       above: 55
-      below: 76
+      below: 66
   action:
     - service: script.ventilatie_stand2
 
@@ -240,7 +241,7 @@
       to: "3.0"
     - platform: numeric_state
       entity_id: sensor.badkamer_sensor_relative_humidity
-      above: 75
+      above: 65
   action:
     - service: script.ventilatie_stand3
 
@@ -271,7 +272,7 @@
       - tue
   action:
     - service: tts.google_translate_say
-      entity_id: media_player.huiskamer
+      entity_id: media_player.home_group
       data:
         message: 'Heb je de vuilniszak al buitengezet?'
         language: 'nl'

@@ -1,0 +1,4 @@
+switch.slaapkamer_2_lamp_switch_2:
+  hidden: true
+sensor.ventilatie_previous_reading:
+  hidden: true

@@ -1,0 +1,26 @@
+"sensor.*lamp*_power_*":
+  hidden: true
+"light.*_level_*":
+  hidden: true
+"sensor.*_dimmer_*_system*":
+  hidden: true
+"sensor.*_exporting*":
+  hidden: true
+"sensor.*_alarm_level*":
+  hidden: true
+"sensor.*_alarm_type*":
+  hidden: true
+"sensor.*_heat*":
+  hidden: true
+"sensor.*_power_management*":
+  hidden: true
+"sensor.*_sourcenodeid*":
+  hidden: true
+"sensor.*_sensor_burglar":
+  hidden: true
+"sensor.*_sensor_ultraviolet":
+  hidden: true
+"sensor.*phase_l2":
+  hidden: true
+"sensor.*phase_l3":
+  hidden: true

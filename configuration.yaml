@@ -5,45 +5,21 @@ homeassistant:
   latitude: !secret latitude
   longitude: !secret longitude
   # Impacts weather/sunrise data (altitude above sea level in meters)
-  elevation: 15
+  elevation: 15.7
   # metric for Metric, imperial for Imperial
   unit_system: metric
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Amsterdam
-  customize:
-    switch.slaapkamer_2_lamp_switch_2:
-      hidden: true
-    sensor.ventilatie_previous_reading:
-      hidden: true
-  customize_glob:
-    "sensor.*_dimmer_*_system*":
-      hidden: true
-    "sensor.*_exporting*":
-      hidden: true
-    "sensor.*_alarm_level*":
-      hidden: true
-    "sensor.*_alarm_type*":
-      hidden: true
-    "sensor.*_heat*":
-      hidden: true
-    "sensor.*_power_management*":
-      hidden: true
-    "sensor.*_sourcenodeid*":
-      hidden: true
-    "sensor.*_sensor_burglar":
-      hidden: true
-    "sensor.*_sensor_ultraviolet":
-      hidden: true
-    "sensor.*phase_l2":
-      hidden: true
-    "sensor.*phase_l3":
-      hidden: true
+  packages: !include_dir_named packages
+  customize: !include customize.yaml
+  customize_glob: !include customize_glob.yaml
 
 #logger:
 #  default: debug
 
 # Enables the frontend
 frontend:
+  themes: !include themes.yaml
 
 # Enables configuration UI
 config:
@@ -100,11 +76,8 @@ binary_sensor:
 tts:
   platform: google_translate
 
-zwave:
-  usb_path: /dev/ttyUSB0
-
 climate:
-  - platform: anna
+  - platform: plugwise
     name: Anna Thermostat
     username: smile
     password: !secret anna_password
@@ -180,10 +153,12 @@ google_assistant:
     switch.slaapkamer_2_lamp_switch:
       name: Second bedroom light
       expose: true
-      aliases:
-        - tweede slaapkamer lamp
       room: Second bedroom
     script.bedtijd:
       name: Bedtime
+      expose: true
+      room: Living room
+    script.opstaan:
+      name: Wake Up
       expose: true
       room: Living room
