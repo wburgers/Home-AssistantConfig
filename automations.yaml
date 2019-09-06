@@ -62,10 +62,9 @@
 
 - alias: "Thermostaat aan bij thuiskomst"
   trigger:
-    platform: zone
-    entity_id: device_tracker.owntracks_willem
-    zone: zone.home
-    event: enter
+    platform: state
+    entity_id: sensor.someone_home
+    to: "True"
   action:
     - service: climate.set_preset_mode
       data:
@@ -74,8 +73,9 @@
 
 - alias: "Licht aan voor zonsopkomst"
   trigger:
-    platform: time
-    at: "06:35:00"
+    platform: state
+    entity_id: sensor.everyone_asleep
+    to: "False"
   condition:
     condition: and
     conditions:
@@ -84,8 +84,8 @@
         value_template: "{{ state.attributes.elevation }}"
         below: 0.0
       - condition: state
-        entity_id: device_tracker.owntracks_willem
-        state: home
+        entity_id: sensor.someone_home
+        state: "True"
       - condition: state
         entity_id: binary_sensor.workday_sensor
         state: 'on'
@@ -102,8 +102,8 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: device_tracker.owntracks_willem
-        state: home
+        entity_id: sensor.someone_home
+        state: "True"
       - condition: state
         entity_id: binary_sensor.workday_sensor
         state: 'on'
@@ -123,8 +123,8 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: device_tracker.owntracks_willem
-        state: home
+        entity_id: sensor.someone_home
+        state: "True"
       - condition: numeric_state
         entity_id: sun.sun
         value_template: "{{ state.attributes.elevation }}"
@@ -137,10 +137,9 @@
 
 - alias: "Licht aan bij thuiskomst"
   trigger:
-    platform: zone
-    entity_id: device_tracker.owntracks_willem
-    zone: zone.home
-    event: enter
+    platform: state
+    entity_id: sensor.someone_home
+    to: "True"
   condition:
     condition: numeric_state
     entity_id: sun.sun
@@ -162,8 +161,8 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: device_tracker.owntracks_willem
-        state: home
+        entity_id: sensor.someone_home
+        state: "True"
       - condition: state
         entity_id: input_boolean.movie_mode
         state: 'on'
