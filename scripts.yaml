@@ -78,10 +78,6 @@ bedtijd:
     - service: notify.sleepfilenotify
       data_template:
         message: '{{now().strftime("%Y-%m-%d %H:%M:%S")}}'
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.person_status_willem
-        option: "Asleep"
     - service: climate.set_preset_mode
       data:
         entity_id: climate.anna_thermostat
@@ -101,15 +97,3 @@ bedtijd:
     - service: script.turn_on
       entity_id:
         - script.lampen_slaapkamer2_uit
-
-opstaan:
-  alias: Opstaan
-  sequence:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.person_status_willem
-        option: "Home"
-    - service: climate.set_preset_mode
-      data:
-        entity_id: climate.anna_thermostat
-        preset_mode: home

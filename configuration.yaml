@@ -24,6 +24,11 @@ frontend:
 # Enables configuration UI
 config:
 
+# Enables the map
+map:
+
+zone: !include zones.yaml
+
 http:
   # Uncomment this if you are using SSL or running in Docker etc
   # base_url: example.duckdns.org:8123
@@ -111,10 +116,6 @@ mqtt:
   password: !secret mqtt_password
   certificate: /etc/ssl/certs/ca-certificates.crt
 
-owntracks:
-  max_gps_accuracy: 100
-  secret: !secret owntracks_password
-
 notify:
   - name: push
     platform: html5
@@ -154,11 +155,28 @@ google_assistant:
       name: Second bedroom light
       expose: true
       room: Second bedroom
-    script.bedtijd:
-      name: Bedtime
+    sensor.woonkamer_sensor_temperature:
+      name: Living room temperature
       expose: true
       room: Living room
-    script.opstaan:
-      name: Wake Up
+    sensor.badkamer_sensor_temperature:
+      name: Bathroom temperature
       expose: true
-      room: Living room
+      room: Bathroom
+    sensor.slaapkamer_sensor_temperature:
+      name: Bedroom temperature
+      expose: true
+      room: Bedroom
+    sensor.slaapkamer_2_sensor_temperature:
+      name: Second bedroom temperature
+      expose: true
+      room: Second bedroom
+    script.willem_asleep:
+      name: Willem goes to sleep
+      expose: true
+    script.willem_home:
+      name: Willem is home and awake
+      expose: true
+    script.willem_away:
+      name: Willem is going out
+      expose: true

@@ -44,6 +44,37 @@
         data:
           tag: voltage-swell
 
+- alias: "Controleer Batterij Levels"
+  trigger:
+    platform: time_pattern
+    hours: "/6"
+    minutes: "0"
+  condition:
+    condition: template
+    value_template: >-
+      {%- set battery_alert_threshold = 20|int -%}
+      {{ states | selectattr('attributes.battery_level', 'defined') | selectattr('attributes.battery_level','<', battery_alert_threshold ) | list | count >= 1 }}
+  action:
+    - service: notify.push
+      data_template:
+        title: "Low Battery Detected"
+        message: >-
+          {%- set battery_alert_threshold = 20|int -%}
+          {%- set low_batteries = states | selectattr('attributes.battery_level', 'defined') | selectattr('attributes.battery_level','<', battery_alert_threshold ) | map(attribute='name') | list | join(', ') -%}
+          Low batteries in the following devices: {{ low_batteries }}
+      data:
+        data:
+          tag: battery-low-notification
+
+- alias: "Alles uit bij slapen"
+  trigger:
+    platform: state
+    entity_id: sensor.everyone_asleep
+    to: "True"
+  action:
+    - service: script.turn_on
+      entity_id: script.bedtijd
+
 - alias: "Alles uit bij vertrek"
   trigger:
     platform: state
@@ -65,6 +96,17 @@
     platform: state
     entity_id: sensor.someone_home
     to: "True"
+  action:
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.anna_thermostat
+        preset_mode: home
+
+- alias: "Thermostaat aan bij opstaan"
+  trigger:
+    platform: state
+    entity_id: sensor.everyone_asleep
+    to: "False"
   action:
     - service: climate.set_preset_mode
       data:
@@ -215,7 +257,7 @@
       to: "1.0"
     - platform: numeric_state
       entity_id: sensor.badkamer_sensor_relative_humidity
-      below: 56
+      below: 61
   action:
     - service: script.ventilatie_stand1
 
@@ -227,8 +269,8 @@
       to: "2.0"
     - platform: numeric_state
       entity_id: sensor.badkamer_sensor_relative_humidity
-      above: 55
-      below: 66
+      above: 60
+      below: 71
   action:
     - service: script.ventilatie_stand2
 
@@ -240,7 +282,7 @@
       to: "3.0"
     - platform: numeric_state
       entity_id: sensor.badkamer_sensor_relative_humidity
-      above: 65
+      above: 70
   action:
     - service: script.ventilatie_stand3
 

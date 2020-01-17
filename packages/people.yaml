@@ -2,26 +2,47 @@ automation:
   - alias: "Willem verlaat huis"
     trigger:
       platform: zone
-      entity_id: device_tracker.owntracks_willem
+      entity_id: device_tracker.willem
       zone: zone.home
       event: leave
     action:
+      - service: script.turn_on
+        entity_id: script.willem_away
+
+  - alias: "Willem komt thuis"
+    trigger:
+      platform: zone
+      entity_id: device_tracker.willem
+      zone: zone.home
+      event: enter
+    action:
+      - service: script.turn_on
+        entity_id: script.willem_home
+
+script:
+  willem_home:
+    alias: Willem is thuis
+    sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.person_status_willem
+          option: "Home"
+
+  willem_away:
+    alias: Willem is van huis
+    sequence:
       - service: input_select.select_option
         data:
           entity_id: input_select.person_status_willem
           option: "Away"
 
-  - alias: "Willem komt thuis"
-    trigger:
-      platform: zone
-      entity_id: device_tracker.owntracks_willem
-      zone: zone.home
-      event: enter
-    action:
+  willem_asleep:
+    alias: Willem slaapt
+    sequence:
       - service: input_select.select_option
         data:
           entity_id: input_select.person_status_willem
-          option: "Home"
+          option: "Asleep"
 
 sensor:
   - platform: template
@@ -65,7 +86,8 @@ input_select:
   person_status_willem:
     name: Status Willem
     options:
-      - Home
       - Away
+      - Going Home
+      - Home
       - Asleep
     icon: mdi:human-male
